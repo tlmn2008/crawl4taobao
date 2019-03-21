@@ -10,10 +10,14 @@ import scrapy
 
 class TaobaoSItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
+    tmall = scrapy.Field()
     url = scrapy.Field()
-    price = scrapy.Field()
+    title = scrapy.Field()
+    type = scrapy.Field()
+    brand = scrapy.Field()
+    model = scrapy.Field()
     name = scrapy.Field()
-    num = scrapy.Field()
+    price = scrapy.Field()
+    sales = scrapy.Field()
     shop_name = scrapy.Field()
-    result1 = scrapy.Field()
+

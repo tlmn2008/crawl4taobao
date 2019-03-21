@@ -11,10 +11,15 @@ class TaobaoSPipeline(object):
         self.f = open('淘宝店铺数据.txt','w')
     def process_item(self, item, spider):
         data = {}
+        data['tmall'] = item['tmall']
         data['url'] = item['url']
+        data['title'] = item['title']
+        data['type'] = item['type']
+        data['brand'] = item['brand']
+        data['model'] = item['model']
         data['name'] = item['name']
         data['price'] = item['price']
-        data['num'] = item['num']
+        data['sales'] = item['sales']
         data['shop_name'] = item['shop_name']
         self.f.write(str(data)+'\n')
         return item

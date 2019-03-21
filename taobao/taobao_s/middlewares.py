@@ -6,7 +6,8 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
-
+from scrapy.conf import settings
+import random
 
 class TaobaoSSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
@@ -60,6 +61,8 @@ class TaobaoSDownloaderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.
+    def __init__(self):
+        self.useragents = settings['USER_AGENTS']
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -78,6 +81,10 @@ class TaobaoSDownloaderMiddleware(object):
         # - or return a Request object
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
+        useragent = random.choice(self.useragents)
+        print(useragent)
+        request.headers.setdefault('User-Agent', useragent)
+
         return None
 
     def process_response(self, request, response, spider):
