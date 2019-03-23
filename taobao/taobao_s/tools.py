@@ -25,7 +25,7 @@ def register():
     while True:
 
         browser = webdriver.FirefoxOptions()
-        browser.add_argument('-headless')
+        # browser.add_argument('-headless')
         browser = webdriver.Firefox(firefox_options=browser)
 
         browser.get('https://login.taobao.com/') # ('https://login.taobao.com/member/login.jhtml')
