@@ -24,11 +24,18 @@ def register():
 
     while True:
 
+        # firefox driver
         browser = webdriver.FirefoxOptions()
         # browser.add_argument('-headless')
         browser = webdriver.Firefox(firefox_options=browser)
 
-        browser.get('https://login.taobao.com/') # ('https://login.taobao.com/member/login.jhtml')
+        # chrome driver
+        # chrome_options = webdriver.ChromeOptions()
+        # chrome_options.add_argument('--headless')
+        # chrome_options.add_argument('--no-sandbox')
+        # browser = webdriver.Chrome(chrome_options=chrome_options)
+
+        browser.get('https://login.taobao.com/')  # ('https://login.taobao.com/member/login.jhtml')
 
         try:
             input = WebDriverWait(browser, 10).until(
@@ -61,14 +68,14 @@ def register():
         # browser.get('https://www.taobao.com/')
         cookie = browser.get_cookies()
         list = {}
-        # for cookiez in cookie:
-        #     name = cookiez['name']
-        #     value = cookiez['value']
-        #     list[name] = value
-        # if len(list) > 2:
-        #     break
-        # else:
-        #     browser.close()
+        for cookiez in cookie:
+            name = cookiez['name']
+            value = cookiez['value']
+            list[name] = value
+        if len(list) > 2:
+            break
+        else:
+            browser.close()
         break
     return browser,list
 
