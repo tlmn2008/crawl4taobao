@@ -113,9 +113,10 @@
 # splash setting finished ==============
 
 
-KEYS = '儿童智能手表'
-USER = '17621551747'
-PASSWORD = 'Fe18212898...'
+KEYS = '儿童电话手表'
+# USER = '17621551747'
+# PASSWORD = 'Fe18212898...'
+
 
 BOT_NAME = 'taobao_s'
 

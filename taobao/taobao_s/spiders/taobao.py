@@ -18,7 +18,7 @@ from taobao_s.items import TaobaoSItem
 class TaobaoSpider(scrapy.Spider):
     name = 'taobao'
     # allowed_domains = ['www.taobao.com']
-    base_url = ['https://s.taobao.com/search?q=%E5%84%BF%E7%AB%A5%E6%99%BA%E8%83%BD%E6%89%8B%E8%A1%A8']
+    base_url = ['https://s.taobao.com/search?q=']
     re_headers = {
         'user-agent': '"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"',
         # 'referer': 'https://www.taobao.com/',
@@ -29,12 +29,12 @@ class TaobaoSpider(scrapy.Spider):
     cookies = {}
 
     def start_requests(self):
-        # keys = self.settings.get('KEYS')
+        keys = self.settings.get('KEYS')
         self.browser,c_list = register()
         global cookies
         cookies = c_list
         self.cookies = c_list
-        self.browser.get(self.base_url[0])#+keys)
+        self.browser.get(self.base_url[0]+keys)
         self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight)")
         url_i = self.browser.current_url
         html = self.browser.page_source
@@ -76,17 +76,17 @@ class TaobaoSpider(scrapy.Spider):
                 try:
                     shop_name = product.select('a[class="shopname J_MouseEneterLeave J_ShopInfo"]')[0].get_text().split()[-1]
                 except Exception as e:
-                    print("$$$ shop name get failed.")
+                    print("@@@ shop name get failed.")
                     print(e)
                 try:
                     name = product.select('a[class="J_ClickStat"]')[0].get_text().strip()
                 except Exception as e:
-                    print("$$$ name get failed.")
+                    print("@@@ name get failed.")
                     print(e)
                 try:
                     price = product.select('div[class="price g_price g_price-highlight"]')[0].get_text().strip()[1:]
                 except Exception as e:
-                    print("$$$ price get failed.")
+                    print("@@@ price get failed.")
                     print(e)
 
                 brand = None
@@ -110,26 +110,27 @@ class TaobaoSpider(scrapy.Spider):
                         sales = self.browser.find_elements(
                             By.XPATH, '//li[@class="tm-ind-item tm-ind-sellCount"]/*/span[@class="tm-count"]')[0].text
                     except Exception as e:
-                        print("$$$ sales get failed.")
+                        print("@@@ sales get failed.")
                         print(e)
 
                     for param in self.browser.find_elements(By.XPATH, '//*[@id="J_AttrUL"]/li'):
-                        if u'品牌' in param.text:
-                            brand = param.text
-                        if param.text.startswith(u'型号'):
-                            model = param.text
+                        text = param.text
+                        if text.startswith(u'品牌:'):
+                            brand = text
+                        if text.startswith(u'型号:'):
+                            model = text
                 else:
                     mall_name = 'taobao'
                     try:
                         sales = self.browser.find_elements(By.ID, 'J_SellCounter')[0].text
                     except Exception as e:
-                        print("$$$ sales get failed.")
+                        print("@@@ sales get failed.")
                         print(e)
                     for param in self.browser.find_elements(By.XPATH, '//ul[@class="attributes-list"]/li'):
                         text = param.text
-                        if text.startswith(u'品牌'):
+                        if text.startswith(u'品牌:'):
                             brand = text
-                        if text.startswith(u'型号'):
+                        if text.startswith(u'型号:'):
                             model = text
 
                 self.browser.close()

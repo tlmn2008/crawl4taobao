@@ -40,8 +40,6 @@ try:
         if param.text.startswith(u'型号'):
             print(param.text)
 
-
-
 except():
     # pass
     print(Exception)
