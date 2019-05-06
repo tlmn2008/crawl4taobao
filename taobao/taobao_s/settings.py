@@ -114,9 +114,8 @@
 
 
 KEYS = '儿童电话手表'
-# USER = '17621551747'
-# PASSWORD = 'Fe18212898...'
-
+USER = '17621551747'
+PASSWORD = ''
 
 BOT_NAME = 'taobao_s'
 
